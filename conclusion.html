@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Digital Competency</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <h1>Mastering Digital Competency in the 21st Century</h1>
+        <div class="user-icon">
+            <img src="pics/profile.png" alt="User  Icon" class="user-image">
+            <div class="user-dropdown">
+                <div id="userInfo" style="display: none;">
+                    <p id="userName"></p>
+                    <p id="userRole"></p>
+                </div>
+                <button class="dropbtn">User  Actions</button>
+                <div class="dropdown-content">
+                    <a href="register.html"><button>Register</button></a>
+                    <a href="index.html"><button>Login</button></a>
+                    <a href="index.html"><button onclick="logout()">Logout</button></a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="mainpage.html">Introduction</a></li>
+                <li><a href="article.html">Articles</a></li>
+                <li><a href="conclusion.html">Conclusion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="conclusion">
+            <h2>Conclusion</h2>
+            <p>Mastering digital competency is not just about acquiring technical skills; it is about developing a mindset that embraces continuous learning and adaptation. By enhancing your digital skills, you can navigate the complexities of the digital world and seize new opportunities.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Mastering Digital Competency Project</p>
+    </footer>
+
+    <script>
+        const loggedInUser  = JSON.parse(sessionStorage.getItem('loggedInUser '));
+        if (loggedInUser ) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userName').innerText = "Welcome, " + loggedInUser .username;
+            document.getElementById('userRole').innerText = "Role: " + loggedInUser .role;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser ');
+            alert("You have logged out.");
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>

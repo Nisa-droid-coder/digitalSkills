@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Digital Competency - Articles</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Additional styles for better layout and user experience */
+        #article-search {
+            margin-bottom: 20px;
+        }
+        #pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #pagination button {
+            margin: 0 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse; /* Ensures borders are merged */
+        }
+        th, td {
+            border: 1px solid #007BFF; /* Adds a solid border to table cells */
+            padding: 10px; /* Adds padding for better spacing */
+            text-align: left; /* Aligns text to the left */
+        }
+        th {
+            background-color: #007BFF; /* Adds a background color to the header */
+            color: white; /* Changes text color to white for contrast */
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Adds a light background color to even rows */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mastering Digital Competency in the 21st Century</h1>
+        <div class="user-icon">
+            <img src="pics/profile.png" alt="User  Icon" class="user-image">
+            <div class="user-dropdown">
+                <div id="userInfo" style="display: none;">
+                    <p id="userName"></p>
+                    <p id="userRole"></p>
+                </div>
+                <button class="dropbtn">User  Actions</button>
+                <div class="dropdown-content">
+                    <a href="register.html"><button>Register</button></a>
+                    <a href="index.html"><button>Login</button></a>
+                    <a href="index.html"><button onclick="logout()">Logout</button></a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="mainpage.html">Introduction</a></li>
+                <li><a href="article.html">Articles</a></li>
+                <li><a href="conclusion.html">Conclusion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="article-search">
+            <h2>Search Articles by Category</h2>
+            <input type="text" id="searchInput" placeholder="Search for articles...">
+            <button onclick="searchArticles()">Search</button>
+        </section>
+        <section id="articles">
+            <h2>Articles</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Link</th>
+                        <th>Publish Date</th>
+                        <th>Status</th>
+                        <th>Views</th>
+                        <th>Tags</th>
+                        <th>Categories</th>
+                        <th>Select</th>
+                    </tr>
+                </thead>
+                <tbody id="articleTableBody">
+                    <!-- Articles will be dynamically inserted here -->
+                </tbody>
+            </table>
+            <div id="pagination">
+                <button onclick="prevPage()">Previous</button>
+                <button onclick="nextPage()">Next</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Mastering Digital Competency Project</p>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Mock data for articles
+        const articles = [
+            {
+                title: "Understanding Digital Literacy",
+                content: "This article discusses the importance of digital literacy in today's world.",
+                link: "pdf/pdf1.pdf", // Link to PDF
+                publishDate: "2020-01-15",
+                status: "Published",
+                views: 150,
+                tags: "Digital, Literacy",
+                categories: "Education, Technology",
+                id: 1 // Unique ID for the article
+            },
+            {
+                title: "Cybersecurity Basics",
+                content: "Learn the fundamentals of cybersecurity and how to protect your information.",
+                link: "pdf/pdf2.pdf", // Link to PDF
+                publishDate: "2025-02-10",
+                status: "Published",
+                views: 200,
+                tags: "Cybersecurity, Safety",
+                categories: "Technology, Security",
+                id: 2 // Unique ID for the article
+            },
+            {
+                title: "Emerging Technologies Overview",
+                content: "This article explores the latest trends in emerging technologies.",
+                link: "pdf/pdf3.pdf", // Link to PDF
+                publishDate: "2022-03-05",
+                status: "Draft",
+                views: 50,
+                tags: "Technology, Trends",
+                categories: "Innovation, Research",
+                id: 3 // Unique ID for the article
+            }
+        ];
+
+        let currentPage = 1;
+        const articlesPerPage = 2;
+
+        function displayArticles() {
+            const start = (currentPage - 1) * articlesPerPage;
+            const end = start + articlesPerPage;
+            const articleTableBody = document.getElementById('articleTableBody');
+            articleTableBody.innerHTML = ''; // Clear existing articles
+
+            articles.slice(start, end).forEach(article => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${article.title}</td>
+                    <td>${article.content}</td>
+                    <td><a href="${article.link}" target="_blank">Read More</a></td>
+                    <td>${article.publishDate}</td>
+                    <td>${article.status}</td>
+                    <td>${article.views}</td>
+                    <td>${article.tags}</td>
+                    <td>${article.categories}</td>
+                    <td><a href="comments.html?article=${article.id}"><button>Select</button></a></td>
+                `;
+                articleTableBody.appendChild(row);
+            });
+        }
+
+        function searchArticles() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const filteredArticles = articles.filter(article => article.title.toLowerCase().includes(input));
+            const articleTableBody = document.getElementById('articleTableBody');
+            articleTableBody.innerHTML = ''; // Clear existing articles
+
+            filteredArticles.forEach(article => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${article.title}</td>
+                    <td>${article.content}</td>
+                    <td><a href="${article.link}" target="_blank">Read More</a></td>
+                    <td>${article.publishDate}</td>
+                    <td>${article.status}</td>
+                    <td>${article.views}</td>
+                    <td>${article.tags}</td>
+                    <td>${article.categories}</td>
+                    <td><a href="comments.html?article=${article.id}"><button>Select</button></a></td>
+                `;
+                articleTableBody.appendChild(row);
+            });
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                displayArticles();
+            }
+        }
+
+        function nextPage() {
+            if (currentPage < Math.ceil(articles.length / articlesPerPage)) {
+                currentPage++;
+                displayArticles();
+            }
+        }
+
+        // Initial call to display articles
+        displayArticles();
+
+        const loggedInUser  = JSON.parse(sessionStorage.getItem('loggedInUser '));
+        if (loggedInUser ) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userName').innerText = "Welcome, " + loggedInUser .username;
+            document.getElementById('userRole').innerText = "Role: " + loggedInUser .role;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser ');
+            alert("You have logged out.");
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    </script>
+
+</body>
+</html>

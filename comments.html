@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments - Mastering Digital Competency</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Additional styles for quiz options */
+        .quiz-option {
+            margin-bottom: 10px; /* Gap between each answer choice */
+        }
+        #media-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #media-section img {
+            max-width: 100%; /* Responsive image */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Article</h1>
+        <div class="user-icon">
+            <img src="pics/profile.png" alt="User   Icon" class="user-image">
+            <div class="user-dropdown">
+                <div id="userInfo" style="display: none;">
+                    <p id="userName"></p>
+                    <p id="userRole"></p>
+                </div>
+                <button class="dropbtn">User   Actions</button>
+                <div class="dropdown-content">
+                    <a href="register.html"><button>Register</button></a>
+                    <a href="index.html"><button>Login</button></a>
+                    <a href="index.html"><button onclick="logout()">Logout</button></a>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="mainpage.html">Introduction</a></li>
+                <li><a href="article.html">Articles</a></li>
+                <li><a href="conclusion.html">Conclusion</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="article-details">
+            <h2>Article Details</h2>
+            <div id="articleInfo"></div>
+            <div id="articleSummary"></div>
+        </section>
+    </main>
+    <main>
+        <section id="media-section">
+            <h2>Media</h2>
+            <div id="mediaContent"></div>
+        </section>
+    </main>
+    <main>
+        <section id="quiz-section">
+            <h2>Quiz</h2>
+            <button onclick="startQuiz()">Start Quiz</button>
+            <div id="quizArea"></div>
+        </section>
+    </main>
+    <main>
+        <section id="comments-section">
+            <h2>Comments</h2>
+            <div id="commentsArea"></div>
+            <div class="comment-form">
+                <input type="text" id="comment" placeholder="Your comment..." />
+                <a href="javascript:void(0);" onclick="addComment()"><button>Submit</button></a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Mastering Digital Competency Project</p>
+    </footer>
+
+    <script>
+        const articles = [
+            {
+                title: "Understanding Digital Literacy",
+                content: "This article discusses the importance of digital literacy in today's world.",
+                summary:"Digital literacy has become a fundamental skill set that is essential for personal and professional success in the fast-paced, technology-driven world of today. Digital literacy is the capacity to critically evaluate, create, and effectively navigate information using a variety of digital technologies. It encompasses more than just a basic comprehension of software and devices; it also entails the ability to engage with digital content responsibly, differentiate between credible sources and misinformation, and utilise a variety of platforms for communication and collaboration. The consequences of inadequate digital literacy become more apparent as society becomes more dependent on digital tools for education, employment, and social interaction. Digitally literate individuals can leverage the internet's capabilities to access a plethora of information, engage in online communities, and cultivate the skills that are essential in the contemporary job market. Furthermore, digital literacy cultivates critical thinking and problem-solving skills, thereby allowing individuals to comprehend digital privacy concerns, analyse data, and navigate the intricacies of online interactivity. The promotion of digital literacy is not merely an educational necessity in an era where technology is constantly evolving; it is a societal necessity that enables individuals to thrive in an interconnected world, ensuring that they can contribute meaningfully to their communities and adapt to the challenges of the digital age.",
+                link: "pdf/pdf1.pdf",
+                publishDate: "2020-01-15",
+                status: "Published",
+                views: 150,
+                id: 1,
+                media: "pics/pic1.png", // Media for article 1
+                quiz: [
+                    {
+                        question: "What is digital literacy?",
+                        options: {
+                            A: "The ability to use technology effectively",
+                            B: "Knowing how to use a smartphone",
+                            C: "Understanding programming languages",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "Why is digital literacy important?",
+                        options: {
+                            A: "To learn programming languages",
+                            B: "To navigate the digital world",
+                            C: "To create websites",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "B"
+                    },
+                    {
+                        question: "Which of the following is a component of digital literacy?",
+                        options: {
+                            A: "None of the below",
+                            B: "Physical fitness",
+                            C: "Cooking skills",
+                            D: "Critical thinking"
+                        },
+                        correctAnswer: "D"
+                    },
+                    {
+                        question: "Digital literacy includes the ability to:",
+                        options: {
+                            A: "Evaluate online information",
+                            B: "Only use social media",
+                            C: "Play video games",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "What is a common barrier to digital literacy?",
+                        options: {
+                            A: "Having too many devices",
+                            B: "Too much information",
+                            C: "Lack of access to technology",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "C"
+                    }
+                ]
+            },
+            {
+                title: "Cybersecurity Basics",
+                content: "Learn the fundamentals of cybersecurity and how to protect your information.",
+                summary: "Cybersecurity is a critical discipline that is dedicated to safeguarding computer systems, networks, and data from unauthorised access, damage, or theft. The significance of protecting sensitive information and preserving the integrity of digital infrastructures increases as our dependence on technology increases. The primary objective of cybersecurity is to guarantee the confidentiality, integrity, and availability (CIA) of information. Confidentiality guarantees that sensitive information is only accessed by authorised individuals, integrity guarantees the accuracy and completeness of data, and availability guarantees that information and resources are accessible to authorised users when required. Malware, phishing attacks, ransomware, denial-of-service (DoS) attacks, and insider threats are but a few of the many forms of cyber threats that can pose a unique danger to both individuals and organisations. In order to effectively address cybersecurity incidents, effective cybersecurity practices are guided by several key principles, including defence in depth, which involves the implementation of multiple layers of security controls; least privilege, which grants users the minimum level of access necessary; regular updates and patch management to protect against known vulnerabilities; and incident response planning.",
+                link: "pdf/pdf2.pdf",
+                publishDate: "2025-02-10",
+                status: "Published",
+                views: 200,
+                id: 2,
+                media: "pics/pic2.png", // Media for article 2
+                quiz: [
+                    {
+                        question: "What is cybersecurity?",
+                        options: {
+                            A: "Protection of computer systems",
+                            B: "Creating websites",
+                            C: "Using social media",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "Which of the following is a cybersecurity threat?",
+                        options: {
+                            A: "Reading",
+                            B: "Cooking",
+                            C: "Phishing",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "C"
+                    },
+                    {
+                        question: "What should you do if you receive a suspicious email?",
+                        options: {
+                            A: "Delete it",
+                            B: "Open it",
+                            C: "Forward it",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "What is a strong password?",
+                        options: {
+                            A: "Your name",
+                            B: "A mix of letters, numbers, and symbols",
+                            C: "123456",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "B"
+                    },
+                    {
+                        question: "Why is it important to update software?",
+                        options: {
+                            A: "To waste time",
+                            B: "To make it look nice",
+                            C: "To fix security vulnerabilities",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "C"
+                    }
+                ]
+            },
+            {
+                title: "Emerging Technologies Overview",
+                content: "This article explores the latest trends in emerging technologies.",
+                summary:"Emerging technologies are innovative advancements that are presently in the process of development or will be developed in the near future. These technology have a significant impact on a variety of sectors, including business, healthcare, education, and daily life. AI and ML are the technologies that are at the vanguard of this field. These technologies allow machines to learn from data and make decisions with minimal human intervention. The application of artificial intelligence (AI) has revolutionised industries by improving customer experiences and augmenting efficiency, spanning from natural language processing and computer vision to robotics. Blockchain technology, a decentralised digital ledger, provides secure transaction recording and has the potential to enhance transparency and trust in sectors such as finance and supply chain management, in addition to cryptocurrencies. In areas such as smart homes and cities, the Internet of Things (IoT) enables the collection and sharing of data by connecting everyday devices to the internet. This has the potential to create smarter environments and increase operational efficiency.In the meantime, 5G technology is the fifth iteration of mobile networks, offering faster data speeds and reduced latency. This enables the expansion of IoT and supports applications such as virtual reality (VR) and augmented reality (AR). AR and VR are immersive technologies that are used to create or improve digital experiences. They have a variety of applications in the fields of education, training, and entertainment. Quantum computing has the potential to revolutionise disciplines such as cryptography and materials science by resolving complex problems that traditional computers are unable to solve, utilising the principles of quantum mechanics. Furthermore, the development of gene editing technologies such as CRISPR-Cas9, specifically in the field of biotechnology and genomics, has facilitated the precise modification of DNA, thereby facilitating the development of new technologies in the fields of agriculture and medical. While these emerging technologies have the potential to revolutionise industries and society, they also present challenges such as ethical considerations and security concerns, which require careful navigation to ensure that their benefits are realised responsibly. This potential for innovation and improvement in quality of life is immense.",
+                link: "pdf/pdf3.pdf",
+                publishDate: "2022-03-05",
+                status: "Draft",
+                views: 50,
+                id: 3,
+                media: "pics/pic3.png", // Media for article 3
+                quiz: [
+                    {
+                        question: "What is an emerging technology?",
+                        options: {
+                            A: "A new technology that is currently developing",
+                            B: "An old technology",
+                            C: "A technology that is no longer used",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "Which of the following is an example of an emerging technology?",
+                        options: {
+                            A: "None of the below",
+                            B: "Typewriters",
+                            C: "Televisions",
+                            D: "Artificial Intelligence"
+                        },
+                        correctAnswer: "D"
+                    },
+                    {
+                        question: "What is the Internet of Things (IoT)?",
+                        options: {
+                            A: "A type of computer",
+                            B: "Connecting everyday devices to the internet",
+                            C: "A social media platform",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "B"
+                    },
+                    {
+                        question: "Why is it important to understand emerging technologies?",
+                        options: {
+                            A: "To leverage their potential",
+                            B: "To ignore them",
+                            C: "To avoid using them",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "A"
+                    },
+                    {
+                        question: "Which technology is associated with blockchain?",
+                        options: {
+                            A: "Radio",
+                            B: "Television",
+                            C: "Cryptocurrency",
+                            D: "None of the above"
+                        },
+                        correctAnswer: "C"
+                    }
+                ]
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentQuiz = [];
+
+        const commentsStorage = {};
+
+        function getArticleId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('article');
+        }
+
+        function displayArticleDetails() {
+            const articleId = getArticleId();
+            const article = articles.find(a => a.id == articleId);
+            const articleInfo = document.getElementById('articleInfo');
+
+            if (article) {
+                articleInfo.innerHTML = `
+                    <h3>${article.title}</h3>
+                    <p>${article.content}</p>
+                    <p><strong>Publish Date:</strong> ${article.publishDate}</p>
+                    <p><strong>Status:</strong> ${article.status}</p>
+                    <p><strong>Views:</strong> ${article.views}</p>
+                    <a href="${article.link}">Read More</a>
+                `;
+                articleSummary.innerHTML = `<p><strong>Summary:</strong> ${article.summary}</p>`;
+                displayMedia(article.media);
+            } else {
+                articleInfo.innerHTML = `<p>Article not found.</p>`;
+            }
+        }
+
+        function displayMedia(media) {
+            const mediaContent = document.getElementById('mediaContent');
+            mediaContent.innerHTML = `<img src="${media}" alt="Media for article" />`;
+        }
+
+        function startQuiz() {
+            const articleId = getArticleId();
+            const article = articles.find(a => a.id == articleId);
+            currentQuiz = article.quiz || [];
+            currentQuestionIndex = 0;
+            score = 0;
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const quizArea = document.getElementById('quizArea');
+            if (currentQuestionIndex < currentQuiz.length) {
+                const question = currentQuiz[currentQuestionIndex];
+                quizArea.innerHTML = `<p>${question.question}</p>`;
+                for (const [key, value] of Object.entries(question.options)) {
+                    quizArea.innerHTML += `<div class="quiz-option"><button onclick="checkAnswer('${key}')">${key}) ${value}</button></div>`;
+                }
+            } else {
+                quizArea.innerHTML = `<p>Quiz completed! Your score: ${score}/${currentQuiz.length}</p>`;
+            }
+        }
+
+        function checkAnswer(answer) {
+            const question = currentQuiz[currentQuestionIndex];
+            const quizArea = document.getElementById('quizArea');
+            if (answer === question.correctAnswer) {
+                score++;
+                quizArea.innerHTML += `<p>Correct!</p>`;
+            } else {
+                quizArea.innerHTML += `<p>Wrong! The correct answer is ${question.correctAnswer}) ${question.options[question.correctAnswer]}.</p>`;
+            }
+            currentQuestionIndex++;
+            setTimeout(displayQuestion, 2000); // Wait 2 seconds before showing the next question
+        }
+
+       // Comments functionality
+       function addComment() {
+            const articleId = getArticleId();
+            const commentInput = document.getElementById('comment');
+            const commentText = commentInput.value.trim();
+            const loggedInUser  = JSON.parse(sessionStorage.getItem('loggedInUser '));
+
+            if (commentText && loggedInUser ) {
+                const username = loggedInUser .username; // Get the username from session storage
+                const comments = getCommentsFromStorage(articleId) || []; // Get existing comments
+                comments.push({ username, text: commentText }); // Add comment with username
+                saveCommentsToStorage(articleId, comments); // Save updated comments
+                commentInput.value = ''; // Clear the input
+                displayComments(articleId); // Refresh comments display
+            } else {
+                alert("You must be logged in to comment.");
+            }
+        }
+
+        function displayComments(articleId) {
+            const commentsArea = document.getElementById('commentsArea');
+            commentsArea.innerHTML = ''; // Clear existing comments
+            const comments = getCommentsFromStorage(articleId) || []; // Get comments for the current article
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.className = 'comment';
+                commentDiv.innerText = `${comment.username}: ${comment.text}`; // Display username with comment
+                commentsArea.appendChild(commentDiv);
+            });
+        }
+
+        function getCommentsFromStorage(articleId) {
+            const comments = localStorage.getItem(`comments_${articleId}`);
+            return comments ? JSON.parse(comments) : null;
+        }
+
+        function saveCommentsToStorage(articleId, comments) {
+            localStorage.setItem(`comments_${articleId}`, JSON.stringify(comments));
+        }
+
+
+        // Initial calls to display article details
+        displayArticleDetails();
+        
+
+        const loggedInUser  = JSON.parse(sessionStorage.getItem('loggedInUser '));
+        if (loggedInUser ) {
+            document.getElementById('userInfo').style.display = 'block';
+            document.getElementById('userName').innerText = "Welcome, " + loggedInUser .username;
+            document.getElementById('userRole').innerText = "Role: " + loggedInUser .role;
+        }
+
+        function logout() {
+            sessionStorage.removeItem('loggedInUser ');
+            alert("You have logged out.");
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>
